@@ -1,11 +1,15 @@
 package com.caetano.bankaccountmanagement.entities;
 
-import java.util.Date;
+import java.time.Instant;
 
-/*
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+	
 @Entity
 @Table(name="tb_transfers")
-@DiscriminatorValue("transfer")*/
+@DiscriminatorValue("transfer")
 public class Transfer extends Transaction {
 	
 	private Long receiverId;
@@ -13,10 +17,14 @@ public class Transfer extends Transaction {
 	public Transfer() {
 	}
 
-	public Transfer(Account account, Double amount, Date date, Long receiver) {
-		super(account, amount, date);
-		this.receiverId = receiver;
+
+
+	public Transfer(Account account, Double amount, Instant timestamp, Long receiverId) {
+		super(account, amount, timestamp);
+		this.receiverId = receiverId;
 	}
+
+
 
 	public Long getReceiverId() {
 		return receiverId;

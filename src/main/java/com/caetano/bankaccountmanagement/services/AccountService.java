@@ -1,7 +1,6 @@
 package com.caetano.bankaccountmanagement.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +55,7 @@ public class AccountService {
 	public Account credit(long id, @RequestBody Account entity) {
 		
 		Account account = accountRepository.findById(id).get();		 
-		account.setBalance(account.getBalance() + entity.getBalance());
+		account.credit(entity.getBalance());
 		return accountRepository.save(account);
 	}
 

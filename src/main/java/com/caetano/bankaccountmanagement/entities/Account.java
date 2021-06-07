@@ -1,10 +1,15 @@
 package com.caetano.bankaccountmanagement.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.caetano.bankaccountmanagement.DTO.AccountDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tb_accounts")
@@ -16,11 +21,11 @@ public class Account {
 	private String description;
 	private String status;
 	private Double balance;
-/*
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<Transaction> transactions = new ArrayList<>(); 
-	*/
+	
 	public Account() {
 	}
 	
@@ -78,9 +83,21 @@ public class Account {
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
-	/*
+	
 	public List<Transaction> getTransactions() {
 		return transactions;
-	}*/
+	}
+	
+	public void credit(Double amount) {
+		this.balance += amount;
+	}
+	
+	public void debit(Double amount) {
+		this.balance -= amount;
+	}
+	
+	public boolean canDebit(Double amount) {
+		return (amount <= this.balance);
+	}
 
 }
