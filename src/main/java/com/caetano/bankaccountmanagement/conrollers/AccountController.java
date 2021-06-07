@@ -3,7 +3,9 @@ package com.caetano.bankaccountmanagement.conrollers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,31 @@ public class AccountController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Account> update(@PathVariable("id") long id, @RequestBody Account entity) {
 		Account account = accountService.update(id, entity);		
+		return ResponseEntity.ok().body(account);		
+	}
+	
+	@GetMapping(value="/balance/{id}") 
+	public ResponseEntity<Double> getBalanceById(@PathVariable Long id){
+		Double balance = accountService.getBalance(id);		
+		return ResponseEntity.ok().body(balance);		
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteAccount(@PathVariable("id") Long id){
+		accountService.delete(id);
+		return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
+	}
+
+	@PutMapping("/credit/{id}")
+	public ResponseEntity<Account> credit(@PathVariable("id") long id, @RequestBody Account entity) {
+		Account account = accountService.credit(id, entity);		
+		return ResponseEntity.ok().body(account);		
+	}
+
+	@PutMapping("/debit/{id}")
+	public ResponseEntity<Account> debit(@PathVariable("id") long id, @RequestBody Account entity) {
+		Account account = accountService.debit(id, entity);		
 		return ResponseEntity.ok().body(account);		
 	}
 	

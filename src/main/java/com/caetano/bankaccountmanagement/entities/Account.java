@@ -15,7 +15,7 @@ public class Account {
 	private String name;
 	private String description;
 	private String status;
-	//private Double balance;
+	private Double balance;
 /*
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
@@ -31,11 +31,13 @@ public class Account {
 		this.status = obj.getStatus();		
 	}
 
-	public Account(Long identifier, String name, String description, String status) {
+
+	public Account(Long identifier, String name, String description, String status, Double balance) {
 		this.identifier = identifier;
 		this.name = name;
 		this.description = description;
 		this.status = status;
+		this.balance = balance;
 	}
 
 	public Long getIdentifier() {
@@ -69,7 +71,6 @@ public class Account {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-/*
 	public Double getBalance() {
 		return balance;
 	}
@@ -77,7 +78,6 @@ public class Account {
 	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
-*/
 	/*
 	public List<Transaction> getTransactions() {
 		return transactions;
