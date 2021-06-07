@@ -73,12 +73,6 @@ public class AccountController {
 		Account account = accountService.credit(id, entity);		
 		return ResponseEntity.ok().body(account);		
 	}
-
-	@PutMapping("/debit/{id}")
-	public ResponseEntity<Account> debit(@PathVariable("id") long id, @RequestBody Account entity) {
-		Account account = accountService.debit(id, entity);		
-		return ResponseEntity.ok().body(account);		
-	}
 	
 
 }

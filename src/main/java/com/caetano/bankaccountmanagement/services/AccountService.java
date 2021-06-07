@@ -59,12 +59,5 @@ public class AccountService {
 		account.setBalance(account.getBalance() + entity.getBalance());
 		return accountRepository.save(account);
 	}
-	
-	public Account debit(long id, @RequestBody Account entity) {
-		
-		Account account = accountRepository.findById(id).get();		 
-		account.setBalance(account.getBalance() - entity.getBalance());
-		return accountRepository.save(account);
-	}
 
 }
