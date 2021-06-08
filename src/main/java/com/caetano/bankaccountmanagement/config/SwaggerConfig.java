@@ -26,7 +26,7 @@ public class SwaggerConfig {
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("Bank Account CRUD API REST")
 				.description("Web API Restfull para gerenciamento de contas e pagamentos").version("1.0.0")
-				.license("Apache License Version 2.0").licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
+				.license("MIT License").licenseUrl("https://github.com/caeab/bank-account-management/blob/main/LICENSE")
 				.contact(new Contact("Caetano Alcantara Borges", "linkedin.com/in/caetano-alcantara-borges-7ba8b3101",
 						"caetanoalcantara@gmail.com"))
 				.build();
