@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.caetano.bankaccountmanagement.DTO.TransferDTO;
+import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
+import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.entities.Transfer;
 import com.caetano.bankaccountmanagement.services.TransactionService;
@@ -30,9 +31,9 @@ public class TransactionController {
 
 	@ApiOperation(value="Realiza uma transferência entre contas internas")
 	@PostMapping(value="/transfer")
-	public ResponseEntity<Transfer> makeTransfer(@RequestBody TransferDTO entity){
-		Transfer transfer = transactionService.makeTransfer(entity);
-		return ResponseEntity.ok().body(transfer);		
+	public ResponseEntity<TransferResponseDTO> makeTransfer(@RequestBody TransferRequestDTO entity){
+		TransferResponseDTO transferResponseDTO = transactionService.makeTransfer(entity);
+		return ResponseEntity.ok().body(transferResponseDTO);		
 	}
 
 	@ApiOperation(value="Retorna uma lista com todas as transações")

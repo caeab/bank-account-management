@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.caetano.bankaccountmanagement.DTO.TransferDTO;
+import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
+import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
 import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.entities.Transfer;
@@ -23,7 +24,7 @@ public class TransactionService {
 	@Autowired
 	private AccountService accountService;
 
-	public Transfer makeTransfer(TransferDTO entity) {
+	public TransferResponseDTO makeTransfer(TransferRequestDTO entity) {
 
 		if (entity.getAmount() == null) {
 			throw new MissingRequiredParametersException("Amount required");
@@ -40,7 +41,7 @@ public class TransactionService {
 		receiverAccount.credit(entity.getAmount());
 
 		Transfer transfer = new Transfer(senderAccount, entity.getAmount(), Instant.now(), entity.getReceiverId());
-		return transactionRepository.save(transfer);
+		return new TransferResponseDTO(transactionRepository.save(transfer));
 
 	}
 
