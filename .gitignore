@@ -1,8 +1,5 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 # Package Files #
 *.jar
@@ -55,3 +52,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
