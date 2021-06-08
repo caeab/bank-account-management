@@ -48,8 +48,11 @@ public class AccountService {
 	}
 
 	public Account insert(AccountDTO entity) {
-		if (entity.getIdentifier() == null) {
-			throw new MissingRequiredParametersException("Identifier required");
+		if ((entity.getIdentifier()  == null) ||
+			(entity.getDescription() == null) ||
+			(entity.getName() 		 == null) ||
+			(entity.getStatus() 	 == null)) {
+			throw new MissingRequiredParametersException("Missing required parameters");
 		}
 		if (accountRepository.existsById(entity.getIdentifier())) {
 			throw new EntityAlreadyExistsException("Identifier  " + entity.getIdentifier() + " already exists");

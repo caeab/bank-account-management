@@ -3,6 +3,7 @@ package com.caetano.bankaccountmanagement.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -23,7 +24,7 @@ public class Account {
 	private Double balance;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Transaction> transactions = new ArrayList<>(); 
 	
 	public Account() {
