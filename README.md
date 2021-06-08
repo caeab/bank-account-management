@@ -7,12 +7,15 @@ Esse projeto traz uma API restfull para gerenciamento de contas e pagamentos, fe
 
 A aplicação consiste em um CRUD de conta bancária, com a possibilidade de fazer algumas operações financeiras, como entrada de créditos e transferência entre contas internas.
 
+## Layout pelo Swagger UI
+![Layout Swagger UI]() 
+
 ## Modelo conceitual
 ![Modelo Conceitual]()
 
 # Tecnologias utilizadas
 ## Back end
-- Java
+- Java 11
 - Spring Boot
 - JPA / Hibernate
 - H2 Database
@@ -36,6 +39,14 @@ cd backend
 # executar o projeto
 ./mvnw spring-boot:run
 ```
+
+## Endpoints
+
+A lista completa de endpoints pode ser encontrada usando o Swagger UI.
+
+Você consegue acessar o Swagger UI acessando a url: `/swagger-ui.html`.
+
+
 
 # Autor
 
