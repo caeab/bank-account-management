@@ -2,6 +2,7 @@ package com.caetano.bankaccountmanagement.services;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.caetano.bankaccountmanagement.entities.Account;
 import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.entities.Transfer;
 import com.caetano.bankaccountmanagement.repositories.TransactionRepository;
+import com.caetano.bankaccountmanagement.repositories.TransferRepository;
 import com.caetano.bankaccountmanagement.services.exceptions.BusinessException;
 import com.caetano.bankaccountmanagement.services.exceptions.MissingRequiredParametersException;
 
@@ -20,6 +22,9 @@ public class TransactionService {
 
 	@Autowired
 	private TransactionRepository transactionRepository;
+
+	@Autowired
+	private TransferRepository transferRepository;
 
 	@Autowired
 	private AccountService accountService;
@@ -43,6 +48,11 @@ public class TransactionService {
 		Transfer transfer = new Transfer(senderAccount, entity.getAmount(), Instant.now(), entity.getReceiverId());
 		return new TransferResponseDTO(transactionRepository.save(transfer));
 
+	}
+
+	public List<TransferResponseDTO> findAllTransfer() {
+		List<Transfer> list = transferRepository.findAll();
+		return list.stream().map(x -> new TransferResponseDTO(x)).collect(Collectors.toList());
 	}
 
 	public List<Transaction> findAll() {
