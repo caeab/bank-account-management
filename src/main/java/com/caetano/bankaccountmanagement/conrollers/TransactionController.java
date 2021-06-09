@@ -37,19 +37,19 @@ public class TransactionController {
 		return ResponseEntity.ok().body(transferResponseDTO);
 	}
 
-	@ApiOperation(value = "Retorna uma lista com todas as transferencias")
-	@GetMapping(value = "/transfer")
-	public ResponseEntity<List<TransferResponseDTO>> findAllTransfer() {
-		List<TransferResponseDTO> list = transactionService.findAllTransfer();
-		return ResponseEntity.ok().body(list);
-	}
+//	@ApiOperation(value = "Retorna uma lista com todas as transferencias")
+//	@GetMapping(value = "/transfer")
+//	public ResponseEntity<List<TransferResponseDTO>> findAllTransfer() {
+//		List<TransferResponseDTO> list = transactionService.findAllTransfer();
+//		return ResponseEntity.ok().body(list);
+//	}
 
-	@ApiOperation(value = "Retorna uma lista com todas as transações")
-	@GetMapping
-	public ResponseEntity<List<Transaction>> findAll() {
-		List<Transaction> list = transactionService.findAll();
-		return ResponseEntity.ok().body(list);
-	}
+//	@ApiOperation(value = "Retorna uma lista com todas as transações")
+//	@GetMapping
+//	public ResponseEntity<List<Transaction>> findAll() {
+//		List<Transaction> list = transactionService.findAll();
+//		return ResponseEntity.ok().body(list);
+//	}
 
 	@ApiOperation(value = "Realiza o pagamento de um boleto")
 	@PostMapping(value = "/payment/bill")
