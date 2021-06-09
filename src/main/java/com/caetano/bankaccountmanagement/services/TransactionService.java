@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caetano.bankaccountmanagement.DTO.AccountBalanceDTO;
+import com.caetano.bankaccountmanagement.DTO.BillPaymentDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
+import com.caetano.bankaccountmanagement.entities.BillPayment;
 import com.caetano.bankaccountmanagement.entities.Credit;
 import com.caetano.bankaccountmanagement.entities.ReceiverTransfer;
 import com.caetano.bankaccountmanagement.entities.Transaction;
@@ -48,7 +51,8 @@ public class TransactionService {
 		receiverAccount.credit(entity.getAmount());
 
 		Transfer transfer = new Transfer(senderAccount, entity.getAmount(), Instant.now(), entity.getReceiverId());
-		ReceiverTransfer receiverTransfer = new ReceiverTransfer(receiverAccount, entity.getAmount(), Instant.now(), entity.getSenderId());
+		ReceiverTransfer receiverTransfer = new ReceiverTransfer(receiverAccount, entity.getAmount(), Instant.now(),
+				entity.getSenderId());
 		transactionRepository.save(receiverTransfer);
 		return new TransferResponseDTO(transactionRepository.save(transfer));
 
@@ -62,10 +66,27 @@ public class TransactionService {
 	public List<Transaction> findAll() {
 		return transactionRepository.findAll();
 	}
-	
+
 	public void saveCredit(Account account, Double amount) {
 		Credit credit = new Credit(account, amount, Instant.now());
 		transactionRepository.save(credit);
+	}
+
+	public AccountBalanceDTO payBill(BillPaymentDTO entity) {
+
+		if ((entity.getAmount() == null) || (entity.getBarcode() == null) || (entity.getExpirationDate() == null)) {
+			throw new MissingRequiredParametersException("Missing required parameters");
+		}
+
+		Account account = accountService.findById(entity.getPayerID());
+		if (!account.canDebit(entity.getAmount())) {
+			throw new BusinessException("Sender does not have enough balance");
+		}
+
+		account.debit(entity.getAmount());
+		BillPayment billPayment = new BillPayment(account, entity.getAmount(), Instant.now(), entity.getBarcode(), entity.getExpirationDate());
+		transactionRepository.save(billPayment);
+		return new AccountBalanceDTO(account);
 	}
 
 }
