@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
+import com.caetano.bankaccountmanagement.entities.Credit;
 import com.caetano.bankaccountmanagement.entities.ReceiverTransfer;
 import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.entities.Transfer;
@@ -60,6 +61,11 @@ public class TransactionService {
 
 	public List<Transaction> findAll() {
 		return transactionRepository.findAll();
+	}
+	
+	public void saveCredit(Account account, Double amount) {
+		Credit credit = new Credit(account, amount, Instant.now());
+		transactionRepository.save(credit);
 	}
 
 }

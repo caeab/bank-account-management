@@ -24,6 +24,9 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 
+	@Autowired
+	private TransactionService transactionService;
+
 	public AccountService() {
 	}
 
@@ -36,8 +39,7 @@ public class AccountService {
 		if (id == null) {
 			throw new MissingRequiredParametersException("Identifier required");
 		}
-		return accountRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundException("Id not found " + id));
+		return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Id not found " + id));
 	}
 
 	public AccountBalanceDTO getBalance(Long id) {
@@ -50,10 +52,8 @@ public class AccountService {
 	}
 
 	public AccountDTO insert(AccountDTO entity) {
-		if ((entity.getIdentifier()  == null) ||
-			(entity.getDescription() == null) ||
-			(entity.getName() 		 == null) ||
-			(entity.getStatus() 	 == null)) {
+		if ((entity.getIdentifier() == null) || (entity.getDescription() == null) || (entity.getName() == null)
+				|| (entity.getStatus() == null)) {
 			throw new MissingRequiredParametersException("Missing required parameters");
 		}
 		if (accountRepository.existsById(entity.getIdentifier())) {
@@ -76,7 +76,7 @@ public class AccountService {
 
 	public AccountBalanceDTO credit(@RequestBody CreditDTO entity) {
 		Account account = findById(entity.getAccountId());
-		
+
 		if (entity.getAmount() == null) {
 			throw new MissingRequiredParametersException("Amount required");
 		}
@@ -85,7 +85,7 @@ public class AccountService {
 			throw new BusinessException("Amount must be a positive value");
 		}
 		account.credit(entity.getAmount());
-		
+		transactionService.saveCredit(account, entity.getAmount());
 		return new AccountBalanceDTO(accountRepository.save(account));
 	}
 
