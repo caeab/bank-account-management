@@ -13,6 +13,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_transactions")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -23,6 +25,7 @@ public abstract class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
+	@JsonIgnore
 	private Account account;
 	private Double amount;
 	private Instant timestamp;

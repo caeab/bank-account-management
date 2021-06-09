@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.caetano.bankaccountmanagement.DTO.AccountBalanceDTO;
@@ -84,9 +86,14 @@ public class TransactionService {
 		}
 
 		account.debit(entity.getAmount());
-		BillPayment billPayment = new BillPayment(account, entity.getAmount(), Instant.now(), entity.getBarcode(), entity.getExpirationDate());
+		BillPayment billPayment = new BillPayment(account, entity.getAmount(), Instant.now(), entity.getBarcode(),
+				entity.getExpirationDate());
 		transactionRepository.save(billPayment);
 		return new AccountBalanceDTO(account);
+	}
+
+	public Page<Transaction> getStatement(Account account, Pageable pageable) {
+		return transactionRepository.findByAccount(account, pageable);
 	}
 
 }

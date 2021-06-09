@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 @DiscriminatorValue("credit")
 public class Credit extends Transaction {
 
+	public Credit() {
+	}
+
 	public Credit(Account account, Double amount, Instant timestamp) {
 		super(account, amount, timestamp);
 	}

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,6 +15,7 @@ import com.caetano.bankaccountmanagement.DTO.AccountBalanceDTO;
 import com.caetano.bankaccountmanagement.DTO.AccountDTO;
 import com.caetano.bankaccountmanagement.DTO.CreditDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
+import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.repositories.AccountRepository;
 import com.caetano.bankaccountmanagement.services.exceptions.BusinessException;
 import com.caetano.bankaccountmanagement.services.exceptions.EntityAlreadyExistsException;
@@ -88,5 +91,12 @@ public class AccountService {
 		transactionService.saveCredit(account, entity.getAmount());
 		return new AccountBalanceDTO(accountRepository.save(account));
 	}
+
+	public Page<Transaction> getStatement(Long id, Pageable pageable) {
+
+		Account account = findById(id);
+		
+		return transactionService.getStatement(account, pageable);
+	} 
 
 }

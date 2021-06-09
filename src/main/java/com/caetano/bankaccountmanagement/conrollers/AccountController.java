@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.caetano.bankaccountmanagement.DTO.AccountBalanceDTO;
 import com.caetano.bankaccountmanagement.DTO.AccountDTO;
 import com.caetano.bankaccountmanagement.DTO.CreditDTO;
+import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.services.AccountService;
 
 import io.swagger.annotations.Api;
@@ -87,6 +90,13 @@ public class AccountController {
 	public ResponseEntity<AccountBalanceDTO> credit(@RequestBody CreditDTO entity) {
 		AccountBalanceDTO accountBalanceDTO = accountService.credit(entity);
 		return ResponseEntity.ok().body(accountBalanceDTO);
+	}
+
+	@ApiOperation(value="Buscar extrato financeiro de uma conta")
+	@GetMapping(value = "/statement/{id}")
+	public ResponseEntity<Page<Transaction>> getStatement(@PathVariable("id") Long id, Pageable pageable) {
+		Page<Transaction> result = accountService.getStatement(id, pageable);
+		return ResponseEntity.ok(result);
 	}
 
 }
