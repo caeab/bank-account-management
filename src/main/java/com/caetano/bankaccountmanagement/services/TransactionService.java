@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
+import com.caetano.bankaccountmanagement.entities.ReceiverTransfer;
 import com.caetano.bankaccountmanagement.entities.Transaction;
 import com.caetano.bankaccountmanagement.entities.Transfer;
 import com.caetano.bankaccountmanagement.repositories.TransactionRepository;
@@ -46,6 +47,8 @@ public class TransactionService {
 		receiverAccount.credit(entity.getAmount());
 
 		Transfer transfer = new Transfer(senderAccount, entity.getAmount(), Instant.now(), entity.getReceiverId());
+		ReceiverTransfer receiverTransfer = new ReceiverTransfer(receiverAccount, entity.getAmount(), Instant.now(), entity.getSenderId());
+		transactionRepository.save(receiverTransfer);
 		return new TransferResponseDTO(transactionRepository.save(transfer));
 
 	}
