@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.caetano.bankaccountmanagement.DTO.AccountBalanceDTO;
 import com.caetano.bankaccountmanagement.DTO.BillPaymentDTO;
+import com.caetano.bankaccountmanagement.DTO.TransactionDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferRequestDTO;
 import com.caetano.bankaccountmanagement.DTO.TransferResponseDTO;
 import com.caetano.bankaccountmanagement.entities.Account;
